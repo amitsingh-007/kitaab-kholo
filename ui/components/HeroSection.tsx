@@ -1,17 +1,22 @@
 import {
-  createStyles,
-  Image,
-  Container,
-  Title,
   Button,
+  Container,
+  createStyles,
   Group,
-  Text,
+  Image,
   List,
-  ThemeIcon,
+  Modal,
+  ModalBaseSettings,
   rem,
+  Text,
+  ThemeIcon,
+  Title,
 } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { IconCheck } from "@tabler/icons-react";
+import usePlatform from "../hooks/usePlatform";
 import image from "../svg/hero.svg";
+import { ContactUs } from "./ContactUs";
 import { Dots } from "./Dots";
 
 const useStyles = createStyles((theme) => ({
@@ -98,67 +103,97 @@ const useStyles = createStyles((theme) => ({
 
 function HeroText() {
   const { classes } = useStyles();
-  return (
-    <div className={classes.wrapper}>
-      <Dots className={classes.dots} style={{ left: 0, top: 0 }} />
-      <Dots className={classes.dots} style={{ left: 60, top: 0 }} />
-      <Dots className={classes.dots} style={{ left: 0, top: 140 }} />
-      <Dots className={classes.dots} style={{ right: 0, top: 60 }} />
-      <Container>
-        <div className={classes.inner}>
-          <div className={classes.content}>
-            <Title className={classes.title}>
-              Find your second hand
-              <span className={classes.highlight}>book oasis</span> with Kitaab
-              Kholo.
-            </Title>
-            <Text color="dimmed" mt="md">
-              Your one-stop-shop for second hand books. Order online or call us
-              to order directly with us without any hassle.
-            </Text>
-            <List
-              mt={30}
-              spacing="sm"
-              size="sm"
-              icon={
-                <ThemeIcon size={20} radius="xl">
-                  <IconCheck size={rem(12)} stroke={1.5} />
-                </ThemeIcon>
-              }
-            >
-              <List.Item>
-                <b>Affordable price</b>
-              </List.Item>
-              <List.Item>
-                <b>Hassle-Free Ordering Process</b>
-              </List.Item>
-              <List.Item>
-                <b>Unique curated collection</b>
-              </List.Item>
-            </List>
+  const isMobile = usePlatform();
+  const [showContactForm, { open: openContactForm, close: closeContactForm }] =
+    useDisclosure(false);
 
-            <Group mt={30}>
-              <Button radius="xl" size="md" className={classes.control}>
-                Order Online
-              </Button>
-              <Button
-                variant="default"
-                radius="xl"
-                size="md"
-                className={classes.control}
+  const modalStyles: ModalBaseSettings["styles"] = {
+    content: { borderRadius: "1rem" },
+  };
+  if (isMobile) {
+    modalStyles.body = {
+      padding: 0,
+    };
+  }
+
+  return (
+    <>
+      <div className={classes.wrapper}>
+        <Dots className={classes.dots} style={{ left: 0, top: 0 }} />
+        <Dots className={classes.dots} style={{ left: 60, top: 0 }} />
+        <Dots className={classes.dots} style={{ left: 0, top: 140 }} />
+        <Dots className={classes.dots} style={{ right: 0, top: 60 }} />
+        <Container>
+          <div className={classes.inner}>
+            <div className={classes.content}>
+              <Title className={classes.title}>
+                Find your second hand
+                <span className={classes.highlight}>book oasis</span> with
+                Kitaab Kholo.
+              </Title>
+              <Text color="dimmed" mt="md">
+                Your one-stop-shop for second hand books. Order online or call
+                us to order directly with us without any hassle.
+              </Text>
+              <List
+                mt={30}
+                spacing="sm"
+                size="sm"
+                icon={
+                  <ThemeIcon size={20} radius="xl">
+                    <IconCheck size={rem(12)} stroke={1.5} />
+                  </ThemeIcon>
+                }
               >
-                Login
-              </Button>
-            </Group>
+                <List.Item>
+                  <b>Affordable price</b>
+                </List.Item>
+                <List.Item>
+                  <b>Hassle-Free Ordering Process</b>
+                </List.Item>
+                <List.Item>
+                  <b>Unique curated collection</b>
+                </List.Item>
+              </List>
+
+              <Group mt={30}>
+                <Button
+                  radius="xl"
+                  size="md"
+                  className={classes.control}
+                  onClick={openContactForm}
+                >
+                  Contact Us
+                </Button>
+                <Button
+                  variant="default"
+                  radius="xl"
+                  size="md"
+                  className={classes.control}
+                >
+                  Login
+                </Button>
+              </Group>
+            </div>
+            <Image
+              src={image.src}
+              className={classes.image}
+              alt="Kitaab Kholo Hero Image"
+            />
           </div>
-          <Image
-            src={image.src}
-            className={classes.image}
-            alt="Kitaab Kholo Hero Image"
-          />
-        </div>
-      </Container>
-    </div>
+        </Container>
+      </div>
+      <Modal
+        opened={showContactForm}
+        onClose={closeContactForm}
+        centered
+        withCloseButton={false}
+        size="xl"
+        styles={modalStyles}
+      >
+        <ContactUs close={closeContactForm} />
+      </Modal>
+    </>
   );
 }
 
