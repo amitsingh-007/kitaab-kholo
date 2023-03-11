@@ -48,6 +48,10 @@ export default function App({ Component, pageProps }: AppProps) {
           theme={{
             colorScheme,
             cursorType: "pointer",
+            fontFamily: "Google Sans",
+            headings: {
+              fontFamily: "Google Sans",
+            },
             globalStyles: (theme) => ({
               "#__next": {
                 display: "flex",
