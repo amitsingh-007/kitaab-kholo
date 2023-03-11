@@ -5,6 +5,8 @@ import StatsRing from "../../ui/components/Stats";
 import { ActionIcon, Box, Container, Flex, Text } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { IconX } from "@tabler/icons-react";
+import HeroText from "../../ui/components/HeroSection";
+import { Footer } from "../../ui/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,9 +34,11 @@ export default function Home() {
         </Flex>
       )}
       <Header links={[]} />
+      <HeroText />
       <Container>
         <StatsRing />
       </Container>
+      <Footer />
     </>
   );
 }
