@@ -14,6 +14,7 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconCheck } from "@tabler/icons-react";
+import { useRouter } from "next/router";
 import usePlatform from "../hooks/usePlatform";
 import image from "../svg/hero.svg";
 import { ContactUs } from "./ContactUs";
@@ -106,6 +107,7 @@ function HeroText() {
   const isMobile = usePlatform();
   const [showContactForm, { open: openContactForm, close: closeContactForm }] =
     useDisclosure(false);
+  const router = useRouter();
 
   const modalStyles: ModalBaseSettings["styles"] = {
     content: { borderRadius: "1rem" },
@@ -170,6 +172,7 @@ function HeroText() {
                   radius="xl"
                   size="md"
                   className={classes.control}
+                  onClick={() => router.push("/auth/login")}
                 >
                   Login
                 </Button>
