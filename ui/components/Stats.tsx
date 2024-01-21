@@ -1,76 +1,12 @@
-import { SimpleGrid, Text } from "@mantine/core";
+import { Container, SimpleGrid, Text, rem } from "@mantine/core";
 import {
-  IconMailFast,
-  IconPhone,
-  IconTruckDelivery,
+  IconCertificate,
+  IconCoin,
+  IconTruck,
   TablerIconsProps,
 } from "@tabler/icons-react";
-
-type IData = {
-  label: string;
-  stats: string;
-  color: string;
-  icon: (props: TablerIconsProps) => JSX.Element;
-}[];
-
-const data: IData = [
-  {
-    label: "Free Shipping*",
-    stats: "on orders above ₹999",
-    color: "blue",
-    icon: IconTruckDelivery,
-  },
-  {
-    label: "Replacement",
-    stats: "15 days replacement",
-    color: "green",
-    icon: IconMailFast,
-  },
-  {
-    label: "+91-9911947060",
-    stats: "customer care available",
-    color: "red",
-    icon: IconPhone,
-  },
-];
-
-import { Container, createStyles, rem } from "@mantine/core";
-import { IconCertificate, IconCoin, IconTruck } from "@tabler/icons-react";
-
-const useStyles = createStyles((theme) => ({
-  feature: {
-    position: "relative",
-    paddingTop: theme.spacing.xl,
-    paddingLeft: theme.spacing.xl,
-  },
-
-  overlay: {
-    position: "absolute",
-    height: rem(100),
-    width: rem(160),
-    top: 0,
-    left: 0,
-    backgroundColor: theme.fn.variant({
-      variant: "light",
-      color: theme.primaryColor,
-    }).background,
-    zIndex: 1,
-  },
-
-  content: {
-    position: "relative",
-    zIndex: 2,
-  },
-
-  icon: {
-    color: theme.fn.variant({ variant: "light", color: theme.primaryColor })
-      .color,
-  },
-
-  title: {
-    color: theme.colorScheme === "dark" ? theme.white : theme.black,
-  },
-}));
+import clsx from "clsx";
+import styles from "./styles/Stats.module.css";
 
 interface FeatureProps extends React.ComponentPropsWithoutRef<"div"> {
   icon: React.FC<any>;
@@ -85,15 +21,17 @@ function Feature({
   className,
   ...others
 }: FeatureProps) {
-  const { classes, cx } = useStyles();
-
   return (
-    <div className={cx(classes.feature, className)} {...others}>
-      <div className={classes.overlay} />
+    <div className={clsx(styles.feature, className)} {...others}>
+      <div className={styles.overlay} />
 
-      <div className={classes.content}>
-        <Icon size={rem(38)} className={classes.icon} stroke={1.5} />
-        <Text fw={700} fz="lg" mb="xs" mt={5} className={classes.title}>
+      <div className={styles.content}>
+        <Icon
+          style={{ width: rem(38), height: rem(38) }}
+          className={styles.icon}
+          stroke={1.5}
+        />
+        <Text fw={700} fz="lg" mb="xs" mt={5} className={styles.title}>
           {title}
         </Text>
         <Text c="dimmed" fz="sm">
@@ -130,11 +68,7 @@ export function StatsRing() {
 
   return (
     <Container mt={30} mb={30} size="lg">
-      <SimpleGrid
-        cols={3}
-        breakpoints={[{ maxWidth: "sm", cols: 1 }]}
-        spacing={50}
-      >
+      <SimpleGrid cols={{ base: 1, sm: 3 }} spacing={50}>
         {items}
       </SimpleGrid>
     </Container>

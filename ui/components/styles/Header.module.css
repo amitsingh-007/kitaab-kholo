@@ -1,0 +1,24 @@
+.container {
+  height: 56px;
+  padding-left: var(--mantine-spacing-md);
+  padding-right: var(--mantine-spacing-md);
+  border-bottom: 1px solid
+    light-dark(var(--mantine-color-gray-2), var(--mantine-color-gray-8));
+}
+
+.inner {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.leftGroup {
+  display: flex;
+  gap: 4rem;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    display: none;
+    gap: 0;
+  }
+}
