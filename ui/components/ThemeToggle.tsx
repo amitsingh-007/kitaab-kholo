@@ -1,32 +1,30 @@
 import {
-  Switch,
   Group,
+  Switch,
+  useComputedColorScheme,
   useMantineColorScheme,
-  useMantineTheme,
 } from "@mantine/core";
-import { IconSun, IconMoonStars } from "@tabler/icons-react";
+import { IconMoonStars, IconSun } from "@tabler/icons-react";
 
-const SwitchToggle = () => {
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-  const theme = useMantineTheme();
+const ThemeToggle = () => {
+  const { setColorScheme } = useMantineColorScheme({ keepTransitions: true });
+  const computedColorScheme = useComputedColorScheme("dark", {
+    getInitialValueInEffect: true,
+  });
 
   return (
-    <Group position="center" my={30}>
+    <Group justify="center" my={30}>
       <Switch
-        checked={colorScheme === "dark"}
-        onChange={() => toggleColorScheme()}
-        size="lg"
-        onLabel={<IconSun color={theme.white} size="1.25rem" stroke={1.5} />}
-        offLabel={
-          <IconMoonStars
-            color={theme.colors.gray[6]}
-            size="1.25rem"
-            stroke={1.5}
-          />
+        checked={computedColorScheme === "dark"}
+        onChange={() =>
+          setColorScheme(computedColorScheme === "light" ? "dark" : "light")
         }
+        size="lg"
+        onLabel={<IconSun size="1.25rem" stroke={1.5} />}
+        offLabel={<IconMoonStars size="1.25rem" stroke={1.5} />}
       />
     </Group>
   );
 };
 
-export default SwitchToggle;
+export default ThemeToggle;

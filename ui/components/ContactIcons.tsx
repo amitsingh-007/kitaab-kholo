@@ -1,48 +1,9 @@
-import {
-  createStyles,
-  ThemeIcon,
-  Text,
-  SimpleGrid,
-  Box,
-  Stack,
-} from "@mantine/core";
-import { IconSun, IconPhone, IconMapPin, IconAt } from "@tabler/icons-react";
+import { Box, SimpleGrid, Stack, Text, ThemeIcon } from "@mantine/core";
+import { IconAt, IconPhone, IconSun } from "@tabler/icons-react";
+import clsx from "clsx";
+import styles from "./styles/ContactIcons.module.css";
 
 type ContactIconVariant = "white" | "gradient";
-
-interface ContactIconStyles {
-  variant: ContactIconVariant;
-}
-
-const useStyles = createStyles((theme, { variant }: ContactIconStyles) => ({
-  wrapper: {
-    display: "flex",
-    alignItems: "center",
-    color: theme.white,
-  },
-
-  icon: {
-    marginRight: theme.spacing.md,
-    backgroundImage:
-      variant === "gradient"
-        ? `linear-gradient(135deg, ${theme.colors[theme.primaryColor][4]} 0%, ${
-            theme.colors[theme.primaryColor][6]
-          } 100%)`
-        : "none",
-    backgroundColor: "transparent",
-  },
-
-  title: {
-    color:
-      variant === "gradient"
-        ? theme.colors.gray[6]
-        : theme.colors[theme.primaryColor][0],
-  },
-
-  description: {
-    color: variant === "gradient" ? theme.black : theme.white,
-  },
-}));
 
 interface ContactIconProps
   extends Omit<React.ComponentPropsWithoutRef<"div">, "title"> {
@@ -60,11 +21,10 @@ function ContactIcon({
   className,
   ...others
 }: ContactIconProps) {
-  const { classes, cx } = useStyles({ variant });
   return (
-    <div className={cx(classes.wrapper, className)} {...others}>
+    <div className={clsx(styles.wrapper, className)} {...others}>
       {variant === "gradient" ? (
-        <ThemeIcon size={40} radius="md" className={classes.icon}>
+        <ThemeIcon size={40} radius="md" className={styles.icon}>
           <Icon size="1.5rem" />
         </ThemeIcon>
       ) : (
@@ -74,10 +34,10 @@ function ContactIcon({
       )}
 
       <div>
-        <Text size="xs" className={classes.title}>
+        <Text size="xs" className={styles.title}>
           {title}
         </Text>
-        <Text className={classes.description}>{description}</Text>
+        <Text className={styles.description}>{description}</Text>
       </div>
     </div>
   );
@@ -90,7 +50,7 @@ interface ContactIconsListProps {
 
 const MOCKDATA = [
   { title: "Email", description: "kitaabkholo@gmail.com", icon: IconAt },
-  { title: "Phone", description: "+91 9911947060", icon: IconPhone },
+  { title: "Phone", description: "+91 991194XXXX", icon: IconPhone },
   { title: "Working hours", description: "8 a.m. - 11 p.m.", icon: IconSun },
 ];
 
@@ -106,9 +66,9 @@ export function ContactIconsList({
 
 export function ContactIcons() {
   return (
-    <SimpleGrid cols={2} breakpoints={[{ maxWidth: 755, cols: 1 }]}>
+    <SimpleGrid cols={2}>
       <Box
-        sx={(theme) => ({
+        style={(theme) => ({
           padding: theme.spacing.xl,
           borderRadius: theme.radius.md,
           backgroundColor: theme.white,
@@ -118,7 +78,7 @@ export function ContactIcons() {
       </Box>
 
       <Box
-        sx={(theme) => ({
+        style={(theme) => ({
           padding: theme.spacing.xl,
           borderRadius: theme.radius.md,
           backgroundImage: `linear-gradient(135deg, ${
